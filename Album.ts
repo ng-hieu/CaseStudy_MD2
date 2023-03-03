@@ -2,16 +2,32 @@ import {Song} from "./Song";
 import {ManagerSong} from "./ManagerSong";
 
 export class Album {
-    idAlbum: string;
+    private _idAlbum: number;
     songFrList: Song[] = [];
-    nameOfAlbum: string
+    private _nameOfAlbum: string
 
-    constructor(idAlbum: string, nameOfAlbum: string) {
-        this.idAlbum = idAlbum;
-        this.nameOfAlbum = nameOfAlbum;
+    constructor(idAlbum: number, nameOfAlbum: string) {
+        this._idAlbum = idAlbum;
+        this._nameOfAlbum = nameOfAlbum;
     }
 
-    findIndexInList(id: string, managerSong: ManagerSong): number {
+    get idAlbum(): number {
+        return this._idAlbum;
+    }
+
+    setidAlbum(value: number) {
+        this._idAlbum = value;
+    }
+
+    get nameOfAlbum(): string {
+        return this._nameOfAlbum;
+    }
+
+    setnameOfAlbum(value: string) {
+        this._nameOfAlbum = value;
+    }
+
+    findIndexInList(id: number, managerSong: ManagerSong): number {
         let i: number = -1;
         managerSong.listSong.forEach((value, index, array) => {
             if (value.idSong === id) {
@@ -20,7 +36,7 @@ export class Album {
         })
         return i;
     }
-    findIndexInAlbum(id:string){
+    findIndexInAlbum(id:number){
         let i: number = -1;
         this.songFrList.forEach((value, index, array) => {
             if (value.idSong === id) {
@@ -29,7 +45,7 @@ export class Album {
         })
         return i;
     }
-    addSongFrList(id: string, managerSong: ManagerSong): void {
+    addSongFrList(id: number, managerSong: ManagerSong): void {
         let idOfSong = this.findIndexInList(id, managerSong);
         if (idOfSong != -1) {
             this.songFrList.push(managerSong.listSong[idOfSong]);
@@ -40,7 +56,7 @@ export class Album {
     showAlbum():void{
         console.table(this.songFrList);
     }
-    deleteSongFromAlbum(id:string):void{
+    deleteSongFromAlbum(id:number):void{
         let idOfDelete:number = this.findIndexInAlbum(id)
         if (idOfDelete!=-1) {
             this.songFrList.splice(idOfDelete, 1);

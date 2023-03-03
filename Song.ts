@@ -1,19 +1,19 @@
 export class Song {
-    private _idSong: string;
+    private _idSong: number;
     private _nameOfSong: string;
     private _nameOfSinger: string;
 
-    constructor(idSong: string, nameOfSong: string, nameOfSinger: string) {
+    constructor(idSong: number, nameOfSong: string, nameOfSinger: string) {
         this._idSong = idSong;
         this._nameOfSong = nameOfSong;
         this._nameOfSinger = nameOfSinger;
     }
 
-    get idSong(): string {
+    get idSong(): number {
         return this._idSong;
     }
 
-    setIdSong(value: string) {
+    setIdSong(value: number) {
         this._idSong = value;
     }
 

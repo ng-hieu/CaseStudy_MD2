@@ -2,8 +2,12 @@ import {Song} from "./Song";
 
 export class ManagerSong {
     listSong: Song[] = [];
+    count: number = 0;
 
     constructor() {
+    }
+    getId(){
+        return this.count++;
     }
 
     addSong(song: Song): void {
@@ -24,7 +28,7 @@ export class ManagerSong {
         })
     }
 
-    findIndexById(id:string):number {
+    findIndexById(id:number):number {
         let i:number = 0;
         this.listSong.forEach((value, index, array) => {
             if (value.idSong === id) {
@@ -34,7 +38,7 @@ export class ManagerSong {
         return i;
     }
 
-    deleteSongById(id: string):void {
+    deleteSongById(id: number):void {
         let idOfDelete:number = this.findIndexById(id)
         if (idOfDelete!=-1) {
             this.listSong.splice(idOfDelete, 1);
@@ -43,7 +47,7 @@ export class ManagerSong {
         }
     }
 
-    updateNameSongById(id: string, nameSong:string):void {
+    updateNameSongById(id: number, nameSong:string):void {
         let idOfUpdate:number = this.findIndexById(id)
         if (idOfUpdate!=-1) {
             this.listSong[idOfUpdate].setNameOfSong(nameSong);
@@ -51,7 +55,7 @@ export class ManagerSong {
             console.log("Khong tim thay bai hat")
         }
     }
-    updateNameSingerById(id: string, nameSinger:string):void {
+    updateNameSingerById(id: number, nameSinger:string):void {
         let idOfUpdate:number = this.findIndexById(id)
         if (idOfUpdate!=-1) {
             this.listSong[idOfUpdate].setNameOfSinger(nameSinger);

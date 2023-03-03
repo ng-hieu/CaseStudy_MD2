@@ -18,8 +18,7 @@ export class ManagerSong {
         this.listSong.filter((value, index, array) => {
             if (value.nameOfSong === nameSong) {
                 console.table(array[index]);
-                return;
-            } else if (index === array.length) {
+            } else if (index === array.length-1) {
                 console.log("Khong tim thay bai hat")
             }
         })

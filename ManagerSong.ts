@@ -22,7 +22,7 @@ export class ManagerSong {
     searchSongByName(nameSong: string): void {
         let arrSong: Song[] = this.listSong;
         let result: Song[] = arrSong.filter(element => element.nameOfSong.includes(nameSong));
-        if (result === undefined) {
+        if (result.length === 0) {
             console.log('Eror');
         } else {
             console.table(result);

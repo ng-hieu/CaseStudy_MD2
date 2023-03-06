@@ -64,6 +64,7 @@ function creatNewAlbum() {
 
 function deleteAlbum() {
     console.log(`----Delete album----`);
+    console.log(`++Before delete++`);
     console.table(managerAlbum.showAlbum())
     let id = +input.question('Enter id of album: ');
     console.log(`
@@ -81,7 +82,8 @@ function deleteAlbum() {
             mainMenu();
             break;
     }
-
+    console.log(`++After delete++`);
+    console.table(managerAlbum.showAlbum());
 }
 
 function updateNameOfAlbum() {

@@ -4,10 +4,13 @@ import {Album} from "./Album";
 
 export class ManagerAlbum {
     listAlbum: Album[] = [];
-
+countAlbum: number = 1;
     constructor() {
-    }
 
+    }
+    getIdAlbum(){
+        return this.countAlbum++;
+    }
     findIndexById(id: number): number {
         let i: number = 0;
         this.listAlbum.forEach((value, index, array) => {
@@ -22,8 +25,8 @@ export class ManagerAlbum {
         this.listAlbum.push(album);
     }
 
-    showAlbum(): void {
-        console.table(this.listAlbum);
+    showAlbum(): Album[] {
+        return this.listAlbum;
     }
 
     searchAlbumByName(nameAlbum: string) {
@@ -31,7 +34,7 @@ export class ManagerAlbum {
             if (value.nameOfAlbum === nameAlbum) {
                 console.table(array[index]);
             } else if (index === array.length - 1) {
-                console.log("Khong tim thay Album")
+                console.log("Can't found album")
             }
         })
     }
@@ -41,7 +44,7 @@ export class ManagerAlbum {
         if (idOfUpdate != -1) {
             this.listAlbum[idOfUpdate].setnameOfAlbum(nameAlbum);
         } else {
-            console.log("Khong tim thay Album")
+            console.log("Can't found album")
         }
     }
 
@@ -50,7 +53,7 @@ export class ManagerAlbum {
         if (idOfDelete != -1) {
             this.listAlbum.splice(idOfDelete, 1);
         } else {
-            console.log("Khong tim thay bai hat")
+            console.log("Can't found album")
         }
     }
 }

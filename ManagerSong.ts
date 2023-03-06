@@ -5,6 +5,12 @@ export class ManagerSong {
     countSong: number = 1;
 
     constructor() {
+        let newSong1 = new Song(this.getIdSong(), "Dua nhau di tron", "Den Vau");
+        let newSong2 = new Song(this.getIdSong(), "Nhin", "Den Vau ft Da Sac");
+        let newSong3 = new Song(this.getIdSong(), "Co gai ban ben", "Den Vau ft Lynk Lee");
+        this.addSong(newSong1);
+        this.addSong(newSong2);
+        this.addSong(newSong3);
     }
 
     getIdSong() {
@@ -15,15 +21,15 @@ export class ManagerSong {
         this.listSong.push(song);
     }
 
-    showSong(): void {
-        console.table(this.listSong);
+    showSong(): Song[] {
+       return this.listSong;
     }
 
     searchSongByName(nameSong: string): void {
         let arrSong: Song[] = this.listSong;
         let result: Song[] = arrSong.filter(element => element.nameOfSong.includes(nameSong));
         if (result.length === 0) {
-            console.log('Eror');
+            console.log('Eror - Khong tim thay bai hat nao co cung ten');
         } else {
             console.table(result);
         }

@@ -10,7 +10,7 @@ newAlbum.addSongFrList(1, managerSong);
 newAlbum.addSongFrList(2, managerSong);
 newAlbum.addSongFrList(3, managerSong);
 managerAlbum.addAlbum(newAlbum)
-let regexp = new RegExp(/^[0-9a-zA-Z^a-zA-Z0-9]+$/);
+let regexp = new RegExp(/^[0-9a-zA-Z\s*^a-zA-Z0-9\s*]+$/);
 let input = require('readline-sync');
 
 export function mainMenu() {
@@ -98,7 +98,7 @@ function updateNameOfAlbum() {
     console.log(`----Update album name----`);
     let id = +input.question('Enter id of album update: ');
     let nameAlbum = input.question('Update name of album: ')
-    let check:string = managerAlbum.getNameAlbumById(id);
+    let check: string = managerAlbum.getNameAlbumById(id);
     console.log(check)
     let test = regexp.test(nameAlbum);
     if (test === true && nameAlbum !== check) {
@@ -167,9 +167,9 @@ function updateNameOfSong() {
     console.log(`----Update song name----`);
     let id = +input.question('Enter id of song update: ');
     let nameSong = input.question('Update name of song: ')
-    let check:string = managerSong.getNameSongById(id);
+    let check: string = managerSong.getNameSongById(id);
     let test = regexp.test(nameSong)
-    if (test === true && nameSong!== check) {
+    if (test === true && nameSong !== check) {
         managerSong.updateNameSongById(id, nameSong)
         console.log('Update successful song')
         console.table(managerSong.showSong());
@@ -183,9 +183,9 @@ function updateNameOfSinger() {
     console.log(`----Update singer name----`);
     let id = +input.question('Enter id of song update: ');
     let nameSinger = input.question('Update name of singer: ')
-    let check:string = managerSong.getNameSingerById(id);
+    let check: string = managerSong.getNameSingerById(id);
     let test = regexp.test(nameSinger)
-    if (test === true && nameSinger!== check) {
+    if (test === true && nameSinger !== check) {
         managerSong.updateNameSingerById(id, nameSinger)
         console.log('Update successful singer')
         console.table(managerSong.showSong());

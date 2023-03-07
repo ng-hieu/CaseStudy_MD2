@@ -197,10 +197,24 @@ function creatNewSong() {
     let id = managerSong.getIdSong();
     let nameOfSong = input.question('Enter name of song: ');
     let nameOfSinger = input.question('Enter name of singer: ');
-    let newSong = new Song(id, nameOfSong, nameOfSinger);
-    managerSong.addSong(newSong);
-    console.log('Create successful new songs')
-    console.table(managerSong.showSong());
+    let errorIndex;
+    for (let indexing = 0; indexing < 1;) {
+        if (nameOfSong === '' || nameOfSinger === '') {
+            errorIndex = 1;
+            console.log('Error. You must not leave the song name or singer name empty ')
+            if (errorIndex === 1) {
+                nameOfSong = input.question('Enter name of song: ');
+                nameOfSinger = input.question('Enter name of singer: ');
+                errorIndex = 0;
+            }
+        } else {
+            let newSong = new Song(id, nameOfSong, nameOfSinger);
+            managerSong.addSong(newSong);
+            console.log('Create successful new songs')
+            console.table(managerSong.showSong());
+            indexing++;
+        }
+    }
 }
 
 

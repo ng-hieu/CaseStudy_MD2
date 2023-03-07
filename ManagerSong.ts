@@ -22,7 +22,7 @@ export class ManagerSong {
     }
 
     showSong(): Song[] {
-       return this.listSong;
+        return this.listSong;
     }
 
     searchSongByName(nameSong: string): any {
@@ -34,6 +34,7 @@ export class ManagerSong {
             console.table(result);
         }
     }
+
     checkSongByName(nameSong: string): boolean {
         let check: boolean = false
         let arrSong: Song[] = this.listSong;
@@ -73,12 +74,26 @@ export class ManagerSong {
         }
     }
 
+    getNameSongById(id: number): any {
+        let idOfUpdate: number = this.findIndexById(id)
+        if (idOfUpdate != -1) {
+            return this.listSong[idOfUpdate].getnameOfSong()
+        }
+    }
+
     updateNameSingerById(id: number, nameSinger: string): void {
         let idOfUpdate: number = this.findIndexById(id)
         if (idOfUpdate != -1) {
             this.listSong[idOfUpdate].setNameOfSinger(nameSinger);
         } else {
             console.log("Khong tim thay bai hat")
+        }
+    }
+
+    getNameSingerById(id: number): any {
+        let idOfUpdate: number = this.findIndexById(id)
+        if (idOfUpdate != -1) {
+            return this.listSong[idOfUpdate].getnameOfSinger()
         }
     }
 }

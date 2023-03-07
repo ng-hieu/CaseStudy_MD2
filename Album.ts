@@ -24,7 +24,9 @@ export class Album {
     get nameOfAlbum(): string {
         return this._nameOfAlbum;
     }
-
+    getnameOfAlbum(): string {
+        return this._nameOfAlbum;
+    }
     setnameOfAlbum(value: string) {
         this._nameOfAlbum = value;
     }

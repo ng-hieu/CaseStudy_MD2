@@ -21,11 +21,19 @@ export class Song {
         return this._nameOfSong;
     }
 
+    getnameOfSong(): string {
+        return this._nameOfSong;
+    }
+
     setNameOfSong(value: string) {
         this._nameOfSong = value;
     }
 
     get nameOfSinger(): string {
+        return this._nameOfSinger;
+    }
+
+    getnameOfSinger(): string {
         return this._nameOfSinger;
     }
 

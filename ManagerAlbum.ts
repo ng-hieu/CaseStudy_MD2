@@ -47,6 +47,12 @@ countAlbum: number = 1;
             console.log("Can't found album")
         }
     }
+    getNameAlbumById(id:number):any{
+        let idOfUpdate: number = this.findIndexById(id)
+        if (idOfUpdate != -1) {
+            return this.listAlbum[idOfUpdate].getnameOfAlbum();
+        }
+    }
 
     deleteAlbumById(id: number): void {
         let idOfDelete: number = this.findIndexById(id)

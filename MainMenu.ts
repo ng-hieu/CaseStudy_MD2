@@ -10,7 +10,7 @@ newAlbum.addSongFrList(1, managerSong);
 newAlbum.addSongFrList(2, managerSong);
 newAlbum.addSongFrList(3, managerSong);
 managerAlbum.addAlbum(newAlbum)
-
+let regexp = new RegExp(/^[0-9a-zA-Z^a-zA-Z0-9]+$/);
 let input = require('readline-sync');
 
 export function mainMenu() {
@@ -22,8 +22,9 @@ export function mainMenu() {
     2. Create a new album
     3. Delete album
     4. Update album name
-    5. Find music by name
-    6. Show all music
+    5. Find album by name
+    6. Find music by name
+    7. Show all music
     0. Exit
     `)
         choice = +input.question('Enter choice: ');
@@ -41,9 +42,12 @@ export function mainMenu() {
                 updateNameOfAlbum();
                 break;
             case 5:
-                searchSongByName();
+                searchAlbumByName();
                 break;
             case 6:
+                searchSongByName();
+                break;
+            case 7:
                 showAllSong();
                 break;
         }
@@ -54,23 +58,16 @@ function creatNewAlbum() {
     console.log(`----Create a new album----`);
     let id = managerAlbum.getIdAlbum();
     let nameAlbum = input.question("Enter name of album: ");
-    let errorIndex;
-    for (let indexing = 0; indexing < 1;) {
-        if (nameAlbum === ``) {
-            errorIndex = 1;
-            console.log(`Error`);
-            if (errorIndex === 1) {
-                nameAlbum = input.question("Enter name of album: ");
-                errorIndex = 0;
-            }
-        } else {
-            let newAlbum = new Album(id, nameAlbum);
-            managerAlbum.addAlbum(newAlbum);
-            console.log('Create Success');
-            indexing++;
-        }
+    let test = regexp.test(nameAlbum)
+    if (test === true) {
+        let newAlbum = new Album(id, nameAlbum);
+        managerAlbum.addAlbum(newAlbum);
+        console.log('Create Success');
+        console.table(managerAlbum.showAlbum());
+    } else {
+        console.log("Error! You must not leave the album name empty");
+        creatNewAlbum()
     }
-
 }
 
 function deleteAlbum() {
@@ -101,8 +98,22 @@ function updateNameOfAlbum() {
     console.log(`----Update album name----`);
     let id = +input.question('Enter id of album update: ');
     let nameAlbum = input.question('Update name of album: ')
-    managerAlbum.updateNameAlbumById(id, nameAlbum);
-    console.log('Update successful album')
+    let check:string = managerAlbum.getNameAlbumById(id);
+    console.log(check)
+    let test = regexp.test(nameAlbum);
+    if (test === true && nameAlbum !== check) {
+        managerAlbum.updateNameAlbumById(id, nameAlbum);
+        console.log('Update successful album')
+    } else {
+        console.log('Error! You must not leave the id or album name empty or same old name')
+        updateNameOfAlbum();
+    }
+}
+
+function searchAlbumByName() {
+    console.log(`----Find album by name----`);
+    let nameOfAlbum: string = input.question('Enter name of album: ');
+    managerAlbum.searchAlbumByName(nameOfAlbum);
 }
 
 function searchSongByName() {
@@ -156,18 +167,32 @@ function updateNameOfSong() {
     console.log(`----Update song name----`);
     let id = +input.question('Enter id of song update: ');
     let nameSong = input.question('Update name of song: ')
-    managerSong.updateNameSongById(id, nameSong)
-    console.log('Update successful song')
-    console.table(managerSong.showSong());
+    let check:string = managerSong.getNameSongById(id);
+    let test = regexp.test(nameSong)
+    if (test === true && nameSong!== check) {
+        managerSong.updateNameSongById(id, nameSong)
+        console.log('Update successful song')
+        console.table(managerSong.showSong());
+    } else {
+        console.log('Error! You must not leave the song name empty or same old name');
+        updateNameOfSong();
+    }
 }
 
 function updateNameOfSinger() {
     console.log(`----Update singer name----`);
     let id = +input.question('Enter id of song update: ');
     let nameSinger = input.question('Update name of singer: ')
-    managerSong.updateNameSingerById(id, nameSinger)
-    console.log('Update successful song')
-    console.table(managerSong.showSong());
+    let check:string = managerSong.getNameSingerById(id);
+    let test = regexp.test(nameSinger)
+    if (test === true && nameSinger!== check) {
+        managerSong.updateNameSingerById(id, nameSinger)
+        console.log('Update successful singer')
+        console.table(managerSong.showSong());
+    } else {
+        console.log('Error! You must not leave the singer name empty or same old name');
+        updateNameOfSinger();
+    }
 }
 
 function deleteSong() {
@@ -197,23 +222,16 @@ function creatNewSong() {
     let id = managerSong.getIdSong();
     let nameOfSong = input.question('Enter name of song: ');
     let nameOfSinger = input.question('Enter name of singer: ');
-    let errorIndex;
-    for (let indexing = 0; indexing < 1;) {
-        if (nameOfSong === '' || nameOfSinger === '') {
-            errorIndex = 1;
-            console.log('Error. You must not leave the song name or singer name empty ')
-            if (errorIndex === 1) {
-                nameOfSong = input.question('Enter name of song: ');
-                nameOfSinger = input.question('Enter name of singer: ');
-                errorIndex = 0;
-            }
-        } else {
-            let newSong = new Song(id, nameOfSong, nameOfSinger);
-            managerSong.addSong(newSong);
-            console.log('Create successful new songs')
-            console.table(managerSong.showSong());
-            indexing++;
-        }
+    let testSong = regexp.test(nameOfSong);
+    let testSinger = regexp.test(nameOfSinger);
+    if (testSong === true && testSinger === true) {
+        let newSong = new Song(id, nameOfSong, nameOfSinger);
+        managerSong.addSong(newSong);
+        console.log('Create successful new songs')
+        console.table(managerSong.showSong());
+    } else {
+        console.log("Error! You must not leave the song name or singer name empty");
+        creatNewSong();
     }
 }
 
@@ -317,42 +335,3 @@ function searchSongByNameInAlbum(chosenAlbum: Album) {
 }
 
 mainMenu()
-
-//  let manager = new ManagerSong();
-// let song = new Song(manager.getIdSong(), "I do", "9111");
-// let song1 = new Song(manager.getIdSong(), "I don't", "9113");
-// let song2 = new Song(manager.getIdSong(), "I do", "9311");
-// let song3 = new Song(manager.getIdSong(), "I did", "9112");
-// let album1 = new Album(managerAlbum.getIdAlbum(), "tesst");
-// manager.addSong(song);
-// manager.addSong(song1);
-// manager.addSong(song2);
-// manager.addSong(song3);
-// console.log(manager.showSong());
-// console.log('Hien thi nhac (list tong)--------------------------');
-// manager.searchSongByName("H")
-// manager.deleteSongById(4)
-// manager.showSong()
-// console.log('Tim nhac bang ten va xoa bang ID: 4 --------------------------');
-// manager.updateNameSongById(2, "Name");
-// manager.updateNameSingerById(2, "ewweew")
-// manager.showSong()
-// console.log('Thay doi ten va ng hat cua bai hat ID: 2 --------------------------');
-// album1.addSongFrList(3, manager);
-// album1.addSongFrList(2, manager);
-// album1.showAlbum();
-// console.log('Thêm nhạc vào album1 --------------------------');
-// album1.searchSongByName("I did")
-// console.log('Tim nhac trong Album--------------------------');
-// album1.deleteSongFromAlbum(3)
-// album1.showAlbum();
-// console.log('Hien thi sau khi xoa nhac ID 3--------------------------');
-// managerAlbum.addAlbum(album1);
-// console.table(managerAlbum.showAlbum());
-// console.log('Hien thi album duoc them--------------------------');
-// managerAlbum.updateNameAlbumById(1, "123")
-// managerAlbum.showAlbum()
-// console.log('Sua ten Album------------------------')
-// managerAlbum.deleteAlbumById(1)
-// managerAlbum.showAlbum()
-//console.log('Xoa Album--------------------------');

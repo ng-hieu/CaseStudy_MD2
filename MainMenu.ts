@@ -10,7 +10,7 @@ newAlbum.addSongFrList(1, managerSong);
 newAlbum.addSongFrList(2, managerSong);
 newAlbum.addSongFrList(3, managerSong);
 managerAlbum.addAlbum(newAlbum)
-let regexp = new RegExp(/^[0-9a-zA-Z\s*^a-zA-Z0-9\s*]+$/);
+let regexp = new RegExp(/^[0-9a-zA-Z\s*^a-zA-Z0-9]+$/);
 let input = require('readline-sync');
 
 export function mainMenu() {
@@ -334,4 +334,4 @@ function searchSongByNameInAlbum(chosenAlbum: Album) {
     chosenAlbum.searchSongByNameInAlbum(nameSong);
 }
 
-mainMenu()
+// mainMenu()

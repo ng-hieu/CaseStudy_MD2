@@ -24,7 +24,6 @@ export function mainMenu() {
     4. Update album name
     5. Find music by name
     6. Show all music
-    7. Create a new music
     0. Exit
     `)
         choice = +input.question('Enter choice: ');
@@ -46,9 +45,6 @@ export function mainMenu() {
                 break;
             case 6:
                 showAllSong();
-                break;
-            case 7:
-                creatNewSong();
                 break;
         }
     } while (choice != 0);
@@ -113,24 +109,87 @@ function searchSongByName() {
     console.log(`----Find music by name----`);
     let nameOfSong: string = input.question('Enter name of song: ');
     managerSong.searchSongByName(nameOfSong);
+    selectionOfSong();
 }
 
 function showAllSong(): void {
     console.log(`----Show all music----`);
-    let songList = managerSong.showSong();
-    let menu = '';
-    for (let i = 0; i < songList.length; i++) {
-        menu += `${i + 1}. Id song: ${songList[i].idSong}  ||  Name of song: ${songList[i].nameOfSong}   ||   Name of singer: ${songList[i].nameOfSinger}\n`;
+    console.table(managerSong.showSong());
+    selectionOfSong();
+}
+
+function selectionOfSong() {
+    console.log(`
+    Your choice
+    1. Update song
+    2. Delete song
+    3. Create new song
+    `);
+    let answer: number = +input.question('Enter your select: ');
+    switch (answer) {
+        case 1:
+            console.log(`
+            Your choice
+            1. Update name of song
+            2. Update name of singer
+            `)
+            let choice: number = +input.question('Enter your select: ');
+            switch (choice) {
+                case 1:
+                    updateNameOfSong();
+                    break;
+                case 2:
+                    updateNameOfSinger();
+                    break;
+            }
+            break;
+        case 2:
+            deleteSong();
+            break;
+        case 3:
+            creatNewSong();
+            break;
     }
-    //menu += `0. Thoat`; ---SUY NGHI SUA XOA TRONG HIEN THI TONG ----
-    return console.log(menu);
-    // let choice = +input.question('Enter choice : ');
-    // if (choice === 0) {
-    //     mainMenu();
-    // } else {
-    //     let chosenSong = songList[choice - 1];
-    //     showMenuOfSong(chosenSong);
-    // }
+}
+
+function updateNameOfSong() {
+    console.log(`----Update song name----`);
+    let id = +input.question('Enter id of song update: ');
+    let nameSong = input.question('Update name of song: ')
+    managerSong.updateNameSongById(id, nameSong)
+    console.log('Update successful song')
+    console.table(managerSong.showSong());
+}
+
+function updateNameOfSinger() {
+    console.log(`----Update singer name----`);
+    let id = +input.question('Enter id of song update: ');
+    let nameSinger = input.question('Update name of singer: ')
+    managerSong.updateNameSingerById(id, nameSinger)
+    console.log('Update successful song')
+    console.table(managerSong.showSong());
+}
+
+function deleteSong() {
+    console.log(`----Delete song----`);
+    let id = +input.question('Enter id of song delete: ');
+    console.log(`
+    Do you want to delete this song???
+    1. Yes
+    2. No
+    `);
+    let answer: number = +input.question('Enter your select: ');
+    switch (answer) {
+        case 1:
+            managerSong.deleteSongById(id);
+            console.log('Delete successful song')
+            console.log(`++After delete++`)
+            console.table(managerSong.showSong());
+            break;
+        case 2:
+            selectionOfSong();
+            break;
+    }
 }
 
 function creatNewSong() {
@@ -141,6 +200,7 @@ function creatNewSong() {
     let newSong = new Song(id, nameOfSong, nameOfSinger);
     managerSong.addSong(newSong);
     console.log('Create successful new songs')
+    console.table(managerSong.showSong());
 }
 
 

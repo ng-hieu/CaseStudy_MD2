@@ -25,23 +25,25 @@ export class ManagerSong {
        return this.listSong;
     }
 
-    searchSongByName(nameSong: string): void {
+    searchSongByName(nameSong: string): any {
         let arrSong: Song[] = this.listSong;
         let result: Song[] = arrSong.filter(element => element.nameOfSong.includes(nameSong));
         if (result.length === 0) {
-            console.log('Eror - Khong tim thay bai hat nao co cung ten');
+            console.log('Eror - Error! Can not find any song');
         } else {
             console.table(result);
         }
     }
-
-    // this.listSong.filter((value, index, array) => {
-    //     if (value.nameOfSong === nameSong) {
-    //         console.table(array[index]);
-    //     } else if (value.nameOfSong !== nameSong) {
-    //         console.log("Khong tim thay bai hat");
-    //     }
-    // })
+    checkSongByName(nameSong: string): boolean {
+        let check: boolean = false
+        let arrSong: Song[] = this.listSong;
+        let result: Song[] = arrSong.filter(element => element.nameOfSong.includes(nameSong));
+        if (result.length === 0) {
+            return check = false;
+        } else {
+            return check = true;
+        }
+    }
 
     findIndexById(id: number): number {
         let i: number = 0;

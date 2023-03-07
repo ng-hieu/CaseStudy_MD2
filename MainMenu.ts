@@ -58,8 +58,23 @@ function creatNewAlbum() {
     console.log(`----Create a new album----`);
     let id = managerAlbum.getIdAlbum();
     let nameAlbum = input.question("Enter name of album: ");
-    let newAlbum = new Album(id, nameAlbum);
-    managerAlbum.addAlbum(newAlbum);
+    let errorIndex;
+    for (let indexing = 0; indexing < 1;) {
+        if (nameAlbum === ``) {
+            errorIndex = 1;
+            console.log(`Error`);
+            if (errorIndex === 1) {
+                nameAlbum = input.question("Enter name of album: ");
+                errorIndex = 0;
+            }
+        } else {
+            let newAlbum = new Album(id, nameAlbum);
+            managerAlbum.addAlbum(newAlbum);
+            console.log('Create Success');
+            indexing++;
+        }
+    }
+
 }
 
 function deleteAlbum() {
@@ -100,7 +115,7 @@ function searchSongByName() {
     managerSong.searchSongByName(nameOfSong);
 }
 
-function showAllSong() {
+function showAllSong(): void {
     console.log(`----Show all music----`);
     let songList = managerSong.showSong();
     let menu = '';
@@ -108,7 +123,7 @@ function showAllSong() {
         menu += `${i + 1}. Id song: ${songList[i].idSong}  ||  Name of song: ${songList[i].nameOfSong}   ||   Name of singer: ${songList[i].nameOfSinger}\n`;
     }
     //menu += `0. Thoat`; ---SUY NGHI SUA XOA TRONG HIEN THI TONG ----
-    console.log(menu);
+    return console.log(menu);
     // let choice = +input.question('Enter choice : ');
     // if (choice === 0) {
     //     mainMenu();
@@ -181,18 +196,43 @@ function showSongFrAlbum(chosenAlbum: Album) {
     chosenAlbum.showAlbum();
 }
 
-function addSongFrList(chosenAlbum: Album) {
+function addSongFrList(chosenAlbum: Album): any {
     console.log(`------Add music to an album-----`);
-    let id = +input.question("Enter id want to add the album: ")
-    chosenAlbum.addSongFrList(id, managerSong)
-    console.log('Add successful new songs')
+    let nameOfSong: string = input.question('Enter name of song want to add: ');
+    let result1: boolean = managerSong.checkSongByName(nameOfSong);
+    let result2: any = managerSong.searchSongByName(nameOfSong);
+    if (result1 === false) {
+        return result2;
+    } else {
+        console.table(result2);
+        let id = +input.question("Enter id want to add the album: ")
+        chosenAlbum.addSongFrList(id, managerSong)
+        console.log('Add successful new songs')
+    }
 }
 
 function deleteSongInAlbum(chosenAlbum: Album) {
     console.log(`------Remove music from an album-----`);
+    console.log(`++Before delete++`)
+    chosenAlbum.showAlbum();
     let id = +input.question('Enter id of song delete: ');
-    chosenAlbum.deleteSongFromAlbum(id);
-    console.log('Remove successful song in album')
+    console.log(`
+    Do you want to delete this album???
+    1. Yes
+    2. No
+    `);
+    let answer: number = +input.question('Enter your select: ');
+    switch (answer) {
+        case 1:
+            chosenAlbum.deleteSongFromAlbum(id);
+            console.log('Remove successful song in album');
+            console.log(`++After delete++`)
+            chosenAlbum.showAlbum();
+            break;
+        case 2:
+            showMenuOfAlbum(chosenAlbum);
+            break;
+    }
 }
 
 function searchSongByNameInAlbum(chosenAlbum: Album) {
@@ -203,6 +243,7 @@ function searchSongByNameInAlbum(chosenAlbum: Album) {
 }
 
 mainMenu()
+
 //  let manager = new ManagerSong();
 // let song = new Song(manager.getIdSong(), "I do", "9111");
 // let song1 = new Song(manager.getIdSong(), "I don't", "9113");

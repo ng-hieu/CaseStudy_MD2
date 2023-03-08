@@ -59,6 +59,15 @@ export class Album {
             console.log("Khong co bai hat nao co id nhu vay");
         }
     }
+    checkNameSongInAlbum(id:number):boolean{
+        let check = false;
+        this.songFrList.forEach((value, index, array) => {
+            if(value.idSong===id){
+                return check = true;
+            }
+        })
+        return check;
+    }
 
     showAlbum(): void {
         console.table(this.songFrList);
@@ -68,6 +77,8 @@ export class Album {
         let idOfDelete: number = this.findIndexInAlbum(id)
         if (idOfDelete != -1) {
             this.songFrList.splice(idOfDelete, 1);
+            console.log('Remove successful song in album');
+            console.log(`++After delete++`)
         } else {
             console.log("Khong tim thay bai hat")
         }

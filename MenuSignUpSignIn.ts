@@ -1,9 +1,10 @@
 import {MapAccount} from "./MapAccount";
 import {mainMenu} from "./MainMenu";
 let user = new RegExp(/^[0-9a-zA-Z]+$/);
-let pass = new RegExp(/^[0-9a-zA-Z]{6}$/);
+let pass = new RegExp(/^[0-9a-zA-Z]{6,}$/);
 let input = require('readline-sync');
 let map = new MapAccount();
+map.addAccount("hieu03", "hieu123");
 function menuSignUpSignIn(){
     let choice = -1
     do {
@@ -30,7 +31,7 @@ function signUp(){
     let testUser:boolean = user.test(username);
     let testPass:boolean = pass.test(password);
     let checkSignUp:boolean = map.checkSignUp(username);
-    if(testUser == true && testPass == true){
+    if(testUser === true && testPass === true){
         if(checkSignUp==true){
             console.log('Username already exists');
             signUp();

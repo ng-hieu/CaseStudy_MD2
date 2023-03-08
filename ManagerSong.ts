@@ -47,7 +47,7 @@ export class ManagerSong {
     }
 
     findIndexById(id: number): number {
-        let i: number = 0;
+        let i: number = -1;
         this.listSong.forEach((value, index, array) => {
             if (value.idSong === id) {
                 i = index;

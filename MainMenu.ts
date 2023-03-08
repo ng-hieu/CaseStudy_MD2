@@ -84,7 +84,6 @@ function deleteAlbum() {
     switch (answer) {
         case 1:
             managerAlbum.deleteAlbumById(id);
-            console.log('Delete successful album');
             break;
         case 2:
             mainMenu();
@@ -290,16 +289,21 @@ function showSongFrAlbum(chosenAlbum: Album) {
 
 function addSongFrList(chosenAlbum: Album): any {
     console.log(`------Add music to an album-----`);
-    let nameOfSong: string = input.question('Enter name of song want to add: ');
+    let nameOfSong: string = input.question('Enter name of song to search: ');
     let result1: boolean = managerSong.checkSongByName(nameOfSong);
     let result2: any = managerSong.searchSongByName(nameOfSong);
     if (result1 === false) {
         return result2;
     } else {
         console.table(result2);
-        let id = +input.question("Enter id want to add the album: ")
-        chosenAlbum.addSongFrList(id, managerSong)
-        console.log('Add successful new songs')
+        let id = +input.question("Enter id want to add the album: ");
+        let check: boolean = chosenAlbum.checkNameSongInAlbum(id);
+        if (check == false) {
+            chosenAlbum.addSongFrList(id, managerSong)
+            console.log('Add successful new songs');
+        } else {
+            console.log('This song already exists');
+        }
     }
 }
 
@@ -317,8 +321,6 @@ function deleteSongInAlbum(chosenAlbum: Album) {
     switch (answer) {
         case 1:
             chosenAlbum.deleteSongFromAlbum(id);
-            console.log('Remove successful song in album');
-            console.log(`++After delete++`)
             chosenAlbum.showAlbum();
             break;
         case 2:
@@ -334,4 +336,4 @@ function searchSongByNameInAlbum(chosenAlbum: Album) {
     chosenAlbum.searchSongByNameInAlbum(nameSong);
 }
 
-// mainMenu()
+//mainMenu()

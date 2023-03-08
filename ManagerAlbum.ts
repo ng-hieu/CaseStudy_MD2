@@ -12,7 +12,7 @@ countAlbum: number = 1;
         return this.countAlbum++;
     }
     findIndexById(id: number): number {
-        let i: number = 0;
+        let i: number = -1;
         this.listAlbum.forEach((value, index, array) => {
             if (value.idAlbum === id) {
                 i = index;
@@ -30,13 +30,13 @@ countAlbum: number = 1;
     }
 
     searchAlbumByName(nameAlbum: string) {
-        this.listAlbum.filter((value, index, array) => {
-            if (value.nameOfAlbum === nameAlbum) {
-                console.table(array[index]);
-            } else if (index === array.length - 1) {
-                console.log("Can't found album")
-            }
-        })
+        let arrAlbum: Album[] = this.listAlbum;
+        let result: Album[] = arrAlbum.filter(element => element.nameOfAlbum.includes(nameAlbum))
+        if (result.length === 0) {
+            console.log('Eror - Error! Can not find any album');
+        } else {
+            console.table(result);
+        }
     }
 
     updateNameAlbumById(id: number, nameAlbum: string): void {
@@ -58,6 +58,7 @@ countAlbum: number = 1;
         let idOfDelete: number = this.findIndexById(id)
         if (idOfDelete != -1) {
             this.listAlbum.splice(idOfDelete, 1);
+            console.log('Delete successful album');
         } else {
             console.log("Can't found album")
         }
